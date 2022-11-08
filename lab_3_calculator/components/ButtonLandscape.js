@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, StyleSheet, Text, Dimensions} from 'react-native';
 
 export default ({onPress, text, size, theme}) => {
   const [screen, setScreen] = useState(Dimensions.get('screen'));
-  const [buttonWidth, setButtonWidth] = useState(screen.width / 4);
+  const [buttonWidth, setButtonWidth] = useState(screen.width / 6);
   const [buttonHeight, setButtonHeight] = useState(screen.height / 7);
   const calculateDimensions = () => {
     setScreen(Dimensions.get('screen'));
@@ -29,7 +29,7 @@ export default ({onPress, text, size, theme}) => {
         margin: 1,
       },
       buttonDouble: {
-        width: buttonWidth * 2 - 2,
+        width: buttonWidth * 2 - 18,
         flex: 0,
         alignItems: 'flex-start',
         paddingLeft: 40,

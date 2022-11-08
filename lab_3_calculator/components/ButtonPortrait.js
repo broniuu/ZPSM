@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, StyleSheet, Text, Dimensions} from 'react-native';
 
 export default ({onPress, text, size, theme}) => {
@@ -7,11 +7,11 @@ export default ({onPress, text, size, theme}) => {
   const [buttonHeight, setButtonHeight] = useState(screen.height / 7);
   const calculateDimensions = () => {
     setScreen(Dimensions.get('screen'));
-    setButtonWidth(screen.width / 6);
+    setButtonWidth(screen.width / 4);
     setButtonHeight(screen.height / 7);
   };
   Dimensions.addEventListener('change', () => calculateDimensions());
-  if(buttonWidth < buttonHeight) {
+  if (buttonWidth < buttonHeight) {
     let styles = StyleSheet.create({
       text: {
         color: '#fff',
