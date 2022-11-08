@@ -10,6 +10,7 @@ import {
 
 import Portrait from './components/Portrait';
 import Landscape from './components/Landscape';
+import SplashScreen from './components/SplashScreen';
 
 const App: () => Node = () => {
   const [currentValue, setCurrentValue] = useState('0');
@@ -95,6 +96,7 @@ const App: () => Node = () => {
   Dimensions.addEventListener('change', () => {
     setPortrait(isPortrait());
   });
+
   return isPortrait() === true ? (
     <Portrait currentValue={currentValue} handleTap={handleTap} />
   ) : (
