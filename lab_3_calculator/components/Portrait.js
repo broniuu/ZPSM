@@ -3,8 +3,105 @@ import calculator from '../util/calculator';
 import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
 import Row from './Row';
 import ButtonPortrait from './ButtonPortrait';
+import _ from 'lodash';
 
 const Portrait = props => {
+  const firstRow = [
+    {
+      text: 'C',
+      theme: 'secondary',
+      onPress: () => props.handleTap('clear'),
+    },
+    {
+      text: '+/-',
+      theme: 'secondary',
+      onPress: () => props.handleTap('posneg'),
+    },
+    {
+      text: '%',
+      theme: 'secondary',
+      onPress: () => props.handleTap('percentage'),
+    },
+    {
+      text: '/',
+      theme: 'accent',
+      onPress: () => props.handleTap('operator', '/'),
+    },
+  ];
+  const secondRow = [
+    {
+      text: '7',
+      onPress: () => props.handleTap('number', 7),
+    },
+    {
+      text: '8',
+      onPress: () => props.handleTap('number', 8),
+    },
+    {
+      text: '9',
+      onPress: () => props.handleTap('number', 9),
+    },
+    {
+      text: 'x',
+      theme: 'accent',
+      onPress: () => props.handleTap('operator', '*'),
+    },
+  ];
+  const thirdRow = [
+    {
+      text: '4',
+      onPress: () => props.handleTap('number', 4),
+    },
+    {
+      text: '5',
+      onPress: () => props.handleTap('number', 5),
+    },
+    {
+      text: '6',
+      onPress: () => props.handleTap('number', 6),
+    },
+    {
+      text: '-',
+      theme: 'accent',
+      onPress: () => props.handleTap('operator', '-'),
+    },
+  ];
+  const fourthRow = [
+    {
+      text: '1',
+      onPress: () => props.handleTap('number', 1),
+    },
+    {
+      text: '2',
+      onPress: () => props.handleTap('number', 2),
+    },
+    {
+      text: '3',
+      onPress: () => props.handleTap('number', 3),
+    },
+    {
+      text: '+',
+      theme: 'accent',
+      onPress: () => props.handleTap('operator', '+'),
+    },
+  ];
+  const fifthRow = [
+    {
+      text: '0',
+      size: 'double',
+      onPress: () => props.handleTap('number', 0),
+    },
+    {
+      text: '.',
+      onPress: () => props.handleTap('number', '.'),
+    },
+    {
+      text: '=',
+      theme: 'accent',
+      onPress: () => props.handleTap('equal'),
+    },
+  ];
+  const rows = [firstRow, secondRow, thirdRow, fourthRow, fifthRow];
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -12,105 +109,18 @@ const Portrait = props => {
         <Text style={styles.value}>
           {parseFloat(props.currentValue).toLocaleString()}
         </Text>
-        <Row>
-          <ButtonPortrait
-            text="C"
-            theme="secondary"
-            onPress={() => props.handleTap('clear')}
-          />
-          <ButtonPortrait
-            text="+/-"
-            theme="secondary"
-            onPress={() => props.handleTap('posneg')}
-          />
-          <ButtonPortrait
-            text="%"
-            theme="secondary"
-            onPress={() => props.handleTap('percentage')}
-          />
-          <ButtonPortrait
-            text="/"
-            theme="accent"
-            onPress={() => props.handleTap('operator', '/')}
-          />
-        </Row>
-
-        <Row>
-          <ButtonPortrait
-            text="7"
-            onPress={() => props.handleTap('number', 7)}
-          />
-          <ButtonPortrait
-            text="8"
-            onPress={() => props.handleTap('number', 8)}
-          />
-          <ButtonPortrait
-            text="9"
-            onPress={() => props.handleTap('number', 9)}
-          />
-          <ButtonPortrait
-            text="x"
-            theme="accent"
-            onPress={() => props.handleTap('operator', '*')}
-          />
-        </Row>
-
-        <Row>
-          <ButtonPortrait
-            text="4"
-            onPress={() => props.handleTap('number', 4)}
-          />
-          <ButtonPortrait
-            text="5"
-            onPress={() => props.handleTap('number', 5)}
-          />
-          <ButtonPortrait
-            text="6"
-            onPress={() => props.handleTap('number', 6)}
-          />
-          <ButtonPortrait
-            text="-"
-            theme="accent"
-            onPress={() => props.handleTap('operator', '-')}
-          />
-        </Row>
-
-        <Row>
-          <ButtonPortrait
-            text="1"
-            onPress={() => props.handleTap('number', 1)}
-          />
-          <ButtonPortrait
-            text="2"
-            onPress={() => props.handleTap('number', 2)}
-          />
-          <ButtonPortrait
-            text="3"
-            onPress={() => props.handleTap('number', 3)}
-          />
-          <ButtonPortrait
-            text="+"
-            theme="accent"
-            onPress={() => props.handleTap('operator', '+')}
-          />
-        </Row>
-
-        <Row>
-          <ButtonPortrait
-            text="0"
-            size="double"
-            onPress={() => props.handleTap('number', 0)}
-          />
-          <ButtonPortrait
-            text="."
-            onPress={() => props.handleTap('number', '.')}
-          />
-          <ButtonPortrait
-            text="="
-            theme="accent"
-            onPress={() => props.handleTap('equal')}
-          />
-        </Row>
+        {_.map(rows, row => (
+          <Row>
+            {_.map(row, button => (
+              <ButtonPortrait
+                text={button.text}
+                onPress={button.onPress}
+                theme={button.theme}
+                size={button.size}
+              />
+            ))}
+          </Row>
+        ))}
       </SafeAreaView>
     </View>
   );
