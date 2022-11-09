@@ -107,7 +107,7 @@ const Portrait = props => {
       <StatusBar barStyle="light-content" />
       <SafeAreaView>
         <Text style={styles.value}>
-          {parseFloat(props.currentValue).toLocaleString()}
+          {props.currentValue}
         </Text>
         {_.map(rows, row => (
           <Row>

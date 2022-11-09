@@ -10,49 +10,56 @@ import {
 
 import Portrait from './components/Portrait';
 import Landscape from './components/Landscape';
-import SplashScreen from './components/SplashScreen';
 
 const App: () => Node = () => {
-  const [currentValue, setCurrentValue] = useState('0');
-  const [operator, setOperator] = useState(null);
-  const [previousValue, setPreviousValue] = useState(null);
+  const mexp = require('math-expression-evaluator');
+  const [expression, setExpression] = useState('0');
 
-  const handleNumber = value => {
-    if (currentValue === '0') {
-      setCurrentValue(`${value}`);
+  const handleNumber = number => {
+    if (expression === '0') {
+      setExpression(`${number}`);
     } else {
-      setCurrentValue(`${currentValue}${value}`);
+      setExpression(`${expression}${number}`);
+    }
+  };
+
+  const handleOperator = operator => {
+    switch (operator) {
+      case 'log':
+      case 'ln':
+        if (expression === '0') {
+          setExpression(`${operator}(`);
+        } else {
+          setExpression(`${expression}${operator}(`);
+        }
+        break;
+      case 'sqrt':
+        setExpression(`(${expression})^0.5`);
+        break;
+      case 'e^x':
+        setExpression(`e^(${expression})`);
+        break;
+      case '10^x':
+        setExpression(`10^(${expression})`);
+        break;
+      case 'e':
+        if (expression === '0') {
+          setExpression(`${operator}`);
+        } else {
+          setExpression(`${expression}${operator}`);
+        }
+        break;
+      case 'x^2':
+        setExpression(`(${expression})^2`);
+        break;
+      default:
+        setExpression(`${expression}${operator}`);
+        break;
     }
   };
 
   const handleEqual = () => {
-    const current = parseFloat(currentValue);
-    const previous = parseFloat(previousValue);
-
-    if (operator === '/') {
-      setCurrentValue(previous / current);
-    }
-
-    if (operator === '*') {
-      setCurrentValue(previous * current);
-    }
-
-    if (operator === '+') {
-      setCurrentValue(previous + current);
-    }
-
-    if (operator === '-') {
-      setCurrentValue(previous - current);
-    }
-
-    if (operator === 'sqrt') {
-      setCurrentValue(Math.pow(previous, 1 / current));
-    }
-
-    if (operator !== null) {
-      setOperator(null);
-      setPreviousValue(null);
-    }
+    setExpression(mexp.eval(expression));
   };
 
   const calculator = (type, value) => {
@@ -60,22 +67,17 @@ const App: () => Node = () => {
       case 'number':
         return handleNumber(value);
       case 'operator':
-        setOperator(value);
-        setPreviousValue(currentValue);
-        setCurrentValue('0');
-        break;
+        return handleOperator(value);
       case 'equal':
         return handleEqual();
       case 'clear':
-        setCurrentValue('0');
-        setOperator(null);
-        setPreviousValue(null);
+        setExpression('0');
         break;
       case 'posneg':
-        currentValue: `${parseFloat(currentValue) * -1}`;
+        setExpression(`-${expression}`);
         break;
       case 'percentage':
-        setCurrentValue(`${parseFloat(currentValue) * 0.01}`);
+        setExpression(`%${expression}`);
         break;
       default:
         break;
@@ -98,9 +100,9 @@ const App: () => Node = () => {
   });
 
   return isPortrait() === true ? (
-    <Portrait currentValue={currentValue} handleTap={handleTap} />
+    <Portrait currentValue={expression} handleTap={handleTap} />
   ) : (
-    <Landscape currentValue={currentValue} handleTap={handleTap} />
+    <Landscape currentValue={expression} handleTap={handleTap} />
   );
 };
 
