@@ -13,7 +13,7 @@ const Landscape = props => {
     {
       text: 'x!',
       theme: 'secondary',
-      onPress: () => props.handleTap('posneg'),
+      onPress: () => props.handleTap('operator', 'x!'),
     },
     {
       text: 'AC',
@@ -38,14 +38,14 @@ const Landscape = props => {
   ];
   const secondRow = [
     {
-      text: 'C',
+      text: 'e^x',
       theme: 'secondary',
-      onPress: () => props.handleTap('clear'),
+      onPress: () => props.handleTap('operator', 'e^x'),
     },
     {
-      text: '+/-',
+      text: '10^x',
       theme: 'secondary',
-      onPress: () => props.handleTap('posneg'),
+      onPress: () => props.handleTap('operator', '10^x'),
     },
     {
       text: '7',
@@ -67,14 +67,14 @@ const Landscape = props => {
   ];
   const thirdRow = [
     {
-      text: 'C',
+      text: 'ln',
       theme: 'secondary',
-      onPress: () => props.handleTap('clear'),
+      onPress: () => props.handleTap('operator', 'ln'),
     },
     {
-      text: '+/-',
+      text: 'log10',
       theme: 'secondary',
-      onPress: () => props.handleTap('posneg'),
+      onPress: () => props.handleTap('operator', 'log'),
     },
     {
       text: '4',
@@ -96,14 +96,14 @@ const Landscape = props => {
   ];
   const fourthRow = [
     {
-      text: 'C',
+      text: 'e',
       theme: 'secondary',
-      onPress: () => props.handleTap('clear'),
+      onPress: () => props.handleTap('operator', 'e'),
     },
     {
-      text: '+/-',
+      text: 'x^2',
       theme: 'secondary',
-      onPress: () => props.handleTap('posneg'),
+      onPress: () => props.handleTap('operator', 'x^2'),
     },
     {
       text: '1',
@@ -125,14 +125,14 @@ const Landscape = props => {
   ];
   const fifthRow = [
     {
-      text: 'C',
+      text: '(',
       theme: 'secondary',
-      onPress: () => props.handleTap('clear'),
+      onPress: () => props.handleTap('number', '('),
     },
     {
-      text: '+/-',
+      text: ')',
       theme: 'secondary',
-      onPress: () => props.handleTap('posneg'),
+      onPress: () => props.handleTap('number', ')'),
     },
     {
       text: '0',
@@ -154,9 +154,7 @@ const Landscape = props => {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <SafeAreaView>
-        <Text style={styles.value}>
-          {parseFloat(props.currentValue).toLocaleString()}
-        </Text>
+        <Text style={styles.value}>{props.currentValue}</Text>
         {_.map(rows, row => (
           <Row>
             {_.map(row, button => (
