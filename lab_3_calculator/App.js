@@ -15,6 +15,16 @@ const App: () => Node = () => {
   const mexp = require('math-expression-evaluator');
   const [expression, setExpression] = useState('0');
 
+  const token = {
+    type: 7,
+    token: '%',
+    show: '%',
+    value: function (a) {
+      return a / 100;
+    },
+  };
+
+  let pair = {a: 100};
   const handleNumber = number => {
     if (expression === '0') {
       setExpression(`${number}`);
@@ -27,14 +37,10 @@ const App: () => Node = () => {
     switch (operator) {
       case 'log':
       case 'ln':
-        if (expression === '0') {
-          setExpression(`${operator}(`);
-        } else {
-          setExpression(`${expression}${operator}(`);
-        }
+        setExpression(`${operator}(${expression})`);
         break;
       case 'sqrt':
-        setExpression(`(${expression})^0.5`);
+        setExpression(`root(${expression})`);
         break;
       case 'e^x':
         setExpression(`e^(${expression})`);
@@ -43,6 +49,7 @@ const App: () => Node = () => {
         setExpression(`10^(${expression})`);
         break;
       case 'e':
+      case 'pi':
         if (expression === '0') {
           setExpression(`${operator}`);
         } else {
@@ -52,6 +59,12 @@ const App: () => Node = () => {
       case 'x^2':
         setExpression(`(${expression})^2`);
         break;
+      case 'x^3':
+        setExpression(`(${expression})^3`);
+        break;
+      case 'x!':
+        setExpression(`(${expression})!`);
+        break;
       default:
         setExpression(`${expression}${operator}`);
         break;
@@ -59,7 +72,7 @@ const App: () => Node = () => {
   };
 
   const handleEqual = () => {
-    setExpression(mexp.eval(expression));
+    setExpression(mexp.eval(expression, [token], pair));
   };
 
   const calculator = (type, value) => {
@@ -77,7 +90,7 @@ const App: () => Node = () => {
         setExpression(`-${expression}`);
         break;
       case 'percentage':
-        setExpression(`%${expression}`);
+        setExpression(`${expression}%`);
         break;
       default:
         break;

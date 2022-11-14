@@ -125,14 +125,14 @@ const Landscape = props => {
   ];
   const fifthRow = [
     {
-      text: '(',
+      text: 'pi',
       theme: 'secondary',
-      onPress: () => props.handleTap('number', '('),
+      onPress: () => props.handleTap('operator', 'pi'),
     },
     {
-      text: ')',
+      text: 'x^3',
       theme: 'secondary',
-      onPress: () => props.handleTap('number', ')'),
+      onPress: () => props.handleTap('operator', 'x^3'),
     },
     {
       text: '0',

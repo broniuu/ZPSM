@@ -106,9 +106,7 @@ const Portrait = props => {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <SafeAreaView>
-        <Text style={styles.value}>
-          {props.currentValue}
-        </Text>
+        <Text style={styles.value}>{props.currentValue}</Text>
         {_.map(rows, row => (
           <Row>
             {_.map(row, button => (
