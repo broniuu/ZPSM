@@ -2,7 +2,7 @@ import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
 import TestTile from './TestTile';
 import _ from 'lodash';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const tiles = [
     {
       text: 'lorem ipsum 1',
@@ -17,14 +17,12 @@ const Home = () => {
       text: 'lorem ipsum 4',
     },
   ];
-  const numberOfTiles = tiles.length;
-
   return (
     <View style={styles.container}>
       <SafeAreaView>
         <Text>Home</Text>
         {_.map(tiles, tile => (
-          <TestTile text={tile.text} numberOfTiles={numberOfTiles} />
+          <TestTile text={tile.text} navigation={navigation}/>
         ))}
       </SafeAreaView>
     </View>

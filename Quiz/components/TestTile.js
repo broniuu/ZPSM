@@ -1,14 +1,7 @@
 import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useState} from 'react';
 
-const doNothing = () => {
-  return null;
-};
-
-const TestTile = ({text, numberOfTiles}) => {
-  const [screen, setScreen] = useState(Dimensions.get('screen'));
-  const [tileWidth, setTileWidth] = useState(screen.width);
-  const [tileHeight, setTileHeight] = useState(screen.height / numberOfTiles);
+const TestTile = ({text, navigation}) => {
   let styles = StyleSheet.create({
     text: {
       color: '#060606',
@@ -25,9 +18,10 @@ const TestTile = ({text, numberOfTiles}) => {
     },
   });
 
-
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => navigation.navigate('Test')}>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );
