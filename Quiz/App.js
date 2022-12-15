@@ -1,14 +1,8 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from './components/Home';
 import Results from './components/Results';
-import Test from './components/Test';
 import StackNavigator from './navigators/StackNavigator';
-import TestTiles from './components/TestTiles';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-
 const Drawer = createDrawerNavigator();
 
 const App = ({navigation}) => {
@@ -26,15 +20,14 @@ const App = ({navigation}) => {
       text: 'lorem ipsum 4',
     },
   ];
-
   return (
     <NavigationContainer>
       <Drawer.Navigator
         useLegacyImplementation
-        initialRouteName="Home"
+        initialRouteName="StackNavigator"
         screenOptions={{headerShown: false}}>
         <Drawer.Screen
-          name="Home"
+          name="StackNavigator"
           component={StackNavigator}
           options={{title: 'Home Page'}}
         />

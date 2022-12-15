@@ -6,15 +6,19 @@ const Home = ({navigation}) => {
   const tiles = [
     {
       text: 'lorem ipsum 1',
+      number: 0,
     },
     {
       text: 'lorem ipsum 2',
+      number: 1,
     },
     {
       text: 'lorem ipsum 3',
+      number: 2,
     },
     {
       text: 'lorem ipsum 4',
+      number: 3,
     },
   ];
   return (
@@ -22,7 +26,7 @@ const Home = ({navigation}) => {
       <SafeAreaView>
         <Text>Home</Text>
         {_.map(tiles, tile => (
-          <TestTile text={tile.text} navigation={navigation}/>
+          <TestTile route={tile} navigation={navigation}/>
         ))}
       </SafeAreaView>
     </View>

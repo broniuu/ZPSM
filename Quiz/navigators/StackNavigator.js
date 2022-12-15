@@ -8,26 +8,15 @@ import _ from 'lodash';
 import {HomeStackNavigator} from './StackNavigator';
 import TestTile from '../components/TestTile';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Statute from '../components/Statute';
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const tiles = [
-    {
-      text: 'lorem ipsum 1',
-    },
-    {
-      text: 'lorem ipsum 2',
-    },
-    {
-      text: 'lorem ipsum 3',
-    },
-    {
-      text: 'lorem ipsum 4',
-    },
-  ];
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Statute" component={Statute} />
       <Stack.Screen
         name="Home"
         component={Home}
