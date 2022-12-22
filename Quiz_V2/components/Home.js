@@ -1,32 +1,30 @@
 import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
 import TestTile from './TestTile';
 import _ from 'lodash';
+import {useEffect, useState} from 'react';
 
 const Home = ({navigation}) => {
-  const tiles = [
-    {
-      text: 'lorem ipsum 1',
-      number: 0,
-    },
-    {
-      text: 'lorem ipsum 2',
-      number: 1,
-    },
-    {
-      text: 'lorem ipsum 3',
-      number: 2,
-    },
-    {
-      text: 'lorem ipsum 4',
-      number: 3,
-    },
-  ];
+  const [tests, setTests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const getTestsFromApi = async () => {
+    try {
+      let response = await fetch('https://tgryl.pl/quiz/tests');
+      let responseJson = await response.json();
+      setTests(responseJson);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getTestsFromApi().then();
+  }, []);
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <Text>Home</Text>
-        {_.map(tiles, tile => (
-          <TestTile route={tile} navigation={navigation}/>
+        {_.map(tests, tile => (
+          <TestTile route={tile} navigation={navigation} />
         ))}
       </SafeAreaView>
     </View>

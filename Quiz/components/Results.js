@@ -1,4 +1,12 @@
-import {FlatList, SafeAreaView, Text, View, StyleSheet, StatusBar} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+} from 'react-native';
+import {useEffect, useState} from 'react';
 
 const Result = ({item}) => (
   <View style={styles.item}>
@@ -6,35 +14,27 @@ const Result = ({item}) => (
     <Text>{item.score}</Text>
     <Text>{item.total}</Text>
     <Text>{item.type}</Text>
-    <Text>{item.date}</Text>
+    <Text>{item.createdOn}</Text>
   </View>
 );
 
-const Results = ({navigation}) => {
+const Results = async ({navigation}) => {
   const renderItem = ({item}) => <Result item={item} />;
-  let results = [
-    {
-      nick: 'Marek',
-      score: 18,
-      total: 20,
-      type: 'historia',
-      date: '2022-11-22',
-    },
-    {
-      nick: 'Adam',
-      score: 18,
-      total: 20,
-      type: 'fizyka',
-      date: '2022-05-20',
-    },
-    {
-      nick: 'Robert',
-      score: 18,
-      total: 20,
-      type: 'polski',
-      date: '2022-05-20',
-    },
-  ];
+  const [results, setResults] = useState([]);
+  console.log(1);
+  const getResultsFromApi = async () => {
+    try {
+      let response = await fetch('https://tgryl.pl/quiz/results.');
+      let responseJson = await response.json();
+      return responseJson.results;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    setResults(getResultsFromApi());
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList

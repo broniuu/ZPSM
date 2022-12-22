@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import StackNavigator from './StackNavigator';
-import Results from '../../Quiz_V2/components/Results';
+import Results from '../components/Results';
 import Drawer from '@react-navigation/drawer/src/views/modern/Drawer';
 
 const DrawerNavigator = () => {

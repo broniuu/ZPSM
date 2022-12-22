@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 
@@ -18,31 +19,37 @@ const Result = ({item}) => (
   </View>
 );
 
-const Results = async ({navigation}) => {
-  const renderItem = ({item}) => <Result item={item} />;
+const Results = () => {
   const [results, setResults] = useState([]);
-  console.log(1);
+  const [isLoading, setLoading] = useState(true);
+
   const getResultsFromApi = async () => {
     try {
-      let response = await fetch('https://tgryl.pl/quiz/results.');
+      let response = await fetch('https://tgryl.pl/quiz/results');
       let responseJson = await response.json();
-      return responseJson.results;
+      setResults(responseJson);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
-  useEffect(() => {
-    setResults(getResultsFromApi());
-  }, []);
 
+  useEffect(() => {
+    getResultsFromApi().then();
+  }, []);
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={results}
-        renderItem={renderItem}
-        keyExtractor={item => item}
-      />
-    </SafeAreaView>
+    <View style={styles.container}>
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          data={results}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => <Result item={item} />}
+        />
+      )}
+    </View>
   );
 };
 

@@ -1,69 +1,85 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useState} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useEffect, useState} from 'react';
 import _ from 'lodash';
 const Test = ({route, navigation}) => {
-  const {taskNumber} = route.params;
-  let tasks = [
-    {
-      question:
-        'Który wódz po śmierci Gajusza Mariusza, prowadził wojnę domową z Sullą ?',
-      answers: [
-        {
-          content: 'LUCJUSZ CYNNA',
-          isCorrect: true,
-        },
-        {
-          content: 'JULIUSZ CEZAR',
-          isCorrect: false,
-        },
-        {
-          content: 'LUCJUSZ MURENA',
-          isCorrect: false,
-        },
-        {
-          content: 'MAREK KRASSUS',
-          isCorrect: false,
-        },
-      ],
-      duration: 30,
-    },
-    {
-      question: 'W którym roku zaczęła się II Wojna Światowa?',
-      answers: [
-        {
-          content: '2001',
-          isCorrect: true,
-        },
-        {
-          content: '1939',
-          isCorrect: false,
-        },
-        {
-          content: '1914',
-          isCorrect: false,
-        },
-        {
-          content: '1920',
-          isCorrect: false,
-        },
-      ],
-      duration: 30,
-    },
-  ];
-  let [questionNumber, setQuestionNumber] = useState(0);
-  const toggleQuestion = () => {
-    setQuestionNumber(questionNumber + 1);
+  const {testId, numberOfTasks} = route.params;
+  const [taskNumber, setTaskNumber] = useState(0);
+  const [test, setTest] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [score, setScore] = useState(0);
+
+  const getTestFromApi = async id => {
+    try {
+      const url = 'https://tgryl.pl/quiz/test/' + id;
+      let response = await fetch(url);
+      let responseJson = await response.json();
+      setTest(responseJson);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const postPayload = async payload => {
+    return await fetch('http://tgryl.pl/quiz/result', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+  };
+
+  useEffect(() => {
+    getTestFromApi(testId).then();
+  }, []);
+
+  const handleQuestion = isCorrect => {
+    if (isCorrect) {
+      setScore(score + 1);
+    }
+    setTaskNumber(taskNumber + 1);
+  };
+
+  const renderPayload = payload => {
+    return (
+      <View style={styles.container}>
+        <View style={styles.result}>
+          <Text style={styles.resultProp}>Nick: {payload.nick}</Text>
+          <Text style={styles.resultProp}>Score: {payload.score}</Text>
+          <Text style={styles.resultProp}>Total: {payload.total}</Text>
+          <Text style={styles.resultProp}>Type: {payload.type}</Text>
+        </View>
+      </View>
+    );
   };
 
   const renderQuestion = task => {
-    let answers = task.answers;
+    if (taskNumber >= numberOfTasks) {
+      let payload = {
+        nick: 'Adamson',
+        score: score,
+        total: numberOfTasks,
+        type: test.tags[0],
+      };
+      postPayload(payload).then();
+      return renderPayload(payload);
+    }
     return (
       <View>
-        <Text>{task.question}</Text>
-        <Text>{answers[0].content}</Text>
+        <Text style={styles.question}>{task.question}</Text>
         <FlatList
-          data={answers}
+          data={task.answers}
           renderItem={renderAnswer}
           keyExtractor={answer => answer.content}
         />
@@ -76,14 +92,18 @@ const Test = ({route, navigation}) => {
       <View>
         <TouchableOpacity
           style={styles.answer}
-          onPress={() => toggleQuestion()}>
-          <Text>{answer.content}</Text>
+          onPress={() => handleQuestion(answer.item.isCorrect)}>
+          <Text>{answer.item.content}</Text>
         </TouchableOpacity>
       </View>
     );
   };
 
-  return renderQuestion(tasks[questionNumber]);
+  return isLoading ? (
+    <ActivityIndicator />
+  ) : (
+    renderQuestion(test.tasks[taskNumber])
+  );
 };
 
 let styles = StyleSheet.create({
@@ -97,6 +117,21 @@ let styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     fontFamily: 'Roboto-Regular',
+    color: 'black',
+  },
+  result: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 50,
+  },
+  resultProp: {
+    padding: 5,
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

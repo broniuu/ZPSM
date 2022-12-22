@@ -86,16 +86,17 @@ const Test = ({route, navigation}) => {
   return renderQuestion(tasks[questionNumber]);
 };
 
-
 let styles = StyleSheet.create({
   question: {
     fontWeight: '600',
+    fontFamily: 'Lato-Regular',
   },
   answer: {
     backgroundColor: '#f9c2ff',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
+    fontFamily: 'Roboto-Regular',
   },
 });
 

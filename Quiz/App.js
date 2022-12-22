@@ -1,25 +1,12 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import Results from './components/Results';
-import StackNavigator from './navigators/StackNavigator';
+import StackNavigator from '../Quiz_V2/navigators/StackNavigator';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 const Drawer = createDrawerNavigator();
 
 const App = ({navigation}) => {
-  const testTiles = [
-    {
-      text: 'lorem ipsum 1',
-    },
-    {
-      text: 'lorem ipsum 2',
-    },
-    {
-      text: 'lorem ipsum 3',
-    },
-    {
-      text: 'lorem ipsum 4',
-    },
-  ];
+  console.log('abcd');
   return (
     <NavigationContainer>
       <Drawer.Navigator

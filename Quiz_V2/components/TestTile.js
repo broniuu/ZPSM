@@ -2,20 +2,25 @@ import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useState} from 'react';
 
 const TestTile = ({route, navigation}) => {
-  const {text, testNumber} = route;
+  const {name, description, id, numberOfTasks} = route;
   return (
     <TouchableOpacity
       style={styles.button}
-      onPress={() => navigation.navigate('Test', {testNumber: testNumber})}>
-      <Text style={styles.text}>{text}</Text>
+      onPress={() => navigation.navigate('Test', {testId: id, numberOfTasks: numberOfTasks})}>
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.description}>{description}</Text>
     </TouchableOpacity>
   );
 };
 
 let styles = StyleSheet.create({
-  text: {
+  name: {
     color: '#060606',
-    fontSize: 25,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 12,
   },
   button: {
     backgroundColor: '#a6a6a6',
