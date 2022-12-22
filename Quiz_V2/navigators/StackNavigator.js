@@ -1,15 +1,15 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import Home from '../components/Home';
-import Test from '../components/Test';
-import Results from '../components/Results';
+import Home from '../../Quiz_V2/components/Home';
+import Test from '../../Quiz_V2/components/Test';
+import Results from '../../Quiz_V2/components/Results';
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import _ from 'lodash';
 import {HomeStackNavigator} from './StackNavigator';
-import TestTile from '../components/TestTile';
+import TestTile from '../../Quiz/components/TestTile';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Statute from '../components/Statute';
+import Statute from '../../Quiz_V2/components/Statute';
 
 const Stack = createNativeStackNavigator();
 
