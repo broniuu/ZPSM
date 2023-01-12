@@ -2,7 +2,6 @@ import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {useEffect, useState} from 'react';
 import {useAsyncStorage} from '@react-native-async-storage/async-storage';
-import {NavigationActions, StackActions} from 'react-navigation';
 
 const Statute = ({navigation}) => {
   const [statuteShown, setStatuteShown] = useState('no');

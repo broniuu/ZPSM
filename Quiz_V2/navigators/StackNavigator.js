@@ -9,7 +9,7 @@ import Statute from '../components/Statute';
 
 const Stack = createNativeStackNavigator();
 
-const StackNavigator = () => {
+const StackNavigator = ({route}) => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Statute" component={Statute} />
@@ -17,6 +17,7 @@ const StackNavigator = () => {
         name="Home"
         component={Home}
         options={{title: 'Home Page'}}
+        initialParams={{tests: route.params.tests}}
       />
       <Stack.Screen name="Test" component={Test} />
       <Stack.Screen name="Results" component={Results} />

@@ -3,23 +3,8 @@ import TestTile from './TestTile';
 import _ from 'lodash';
 import {useEffect, useState} from 'react';
 
-const Home = ({navigation}) => {
-  const [tests, setTests] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const getTestsFromApi = async () => {
-    try {
-      let response = await fetch('https://tgryl.pl/quiz/tests');
-      let responseJson = await response.json();
-      setTests(responseJson);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    getTestsFromApi().then();
-  }, []);
+const Home = ({navigation, route}) => {
+  const [tests, setTests] = useState(route.params.tests);
   return (
     <View style={styles.container}>
       <SafeAreaView>
